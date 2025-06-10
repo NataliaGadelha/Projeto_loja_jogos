@@ -6,6 +6,7 @@ export abstract class Jogo {
     private _plataforma: string;
     private _preco: number;
     private _disponivel: boolean;
+    tipo: any;
 
     constructor(codigo: number, nome: string, genero: string, plataforma: string, preco: number, disponivel: boolean) {
         this._codigo = codigo;
@@ -75,14 +76,14 @@ export abstract class Jogo {
     }
 
     public visualizar(): void {
-        console.log("\n\n*****************************************************");
+        console.log("\n\n🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟\n");
         console.log("🕹️ Informações do Jogo:");
-        console.log("*****************************************************");
-        console.log(`🆔 Código: ${this._codigo}`);
-        console.log(`🎮 Nome: ${this._nome}`);
-        console.log(`🗂️  Gênero: ${this._genero}`);
-        console.log(`🖥️  Plataforma: ${this._plataforma}`);
-        console.log(`💰 Preço: R$${this._preco.toFixed(2)}`);
-        console.log(`✅ Disponível: ${this._disponivel ? "Sim" : "Não"} \n`);
+        console.log("\n🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟\n");
+        console.log(`🆔 Código       : ${this._codigo}`);
+        console.log(`🎮 Nome         : ${this._nome}`);
+        console.log(`🗂️  Gênero       : ${this._genero}`);
+        console.log(`🖥️  Plataforma   : ${this._plataforma}`);
+        console.log(`💰 Preço        : R$ ${this._preco.toFixed(2)}`);
+        console.log(`✅ Disponível   : ${this._disponivel ? "Sim" : "Não"}\n`);
     }
 }
