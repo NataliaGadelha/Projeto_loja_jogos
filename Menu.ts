@@ -1,29 +1,45 @@
 import readlinesync = require("readline-sync");
 import { colors } from "./src/util/Colors";
 import { Jogo } from "./src/model/Jogo";
+import { JogoFisico } from "./src/model/JogoFisico";
+import { JogoDigital } from "./src/model/JogoDigital";
 
 export function main() {
 
     let opcao: number;
 
-    const jogoTeste = new Jogo(1, "Cyber Quest", "Ação/RPG", "PC", 149.99, true);
-
     // Testando os métodos do jogo
-    console.log("🔎 Visualizando jogo...");
-    jogoTeste.visualizar();
+
+    const jogoFisicoTeste = new JogoFisico(101, "Super Mario Bros", "Plataforma", "Nintendo Switch", 249.99, true, "Cartucho", 10);
+
+    console.log("\n🔎 Visualizando jogo físico...");
+    jogoFisicoTeste.visualizar();
+
+    console.log("\n💸 Tentando vender 3 unidades...");
+    jogoFisicoTeste.venderJogo(3);
+    jogoFisicoTeste.visualizar();
+
+    console.log("\n❌ Tentando vender 20 unidades (estoque insuficiente)...");
+    jogoFisicoTeste.venderJogo(20);
+    jogoFisicoTeste.visualizar();
+
+    const jogoDigitalTeste = new JogoDigital(202, "Sonic the Hedgehog", "Ação/Plataforma", "PC", 149.99, true, "XYZ-5678-SONIC");
+
+    console.log("\n🔎 Visualizando jogo digital...");
+    jogoDigitalTeste.visualizar();
 
     console.log("\n💰 Atualizando preço para R$129,99...");
-    jogoTeste.atualizarPreco(129.99);
-    jogoTeste.visualizar();
+    jogoDigitalTeste.atualizarPreco(129.99);
+    jogoDigitalTeste.visualizar();
 
     console.log("\n🔄 Alterando disponibilidade...");
-    jogoTeste.alterarDisponibilidade();
-    jogoTeste.visualizar();
+    jogoDigitalTeste.alterarDisponibilidade();
+    jogoDigitalTeste.visualizar();
 
     while (true) {
 
         console.log(colors.bg.black + colors.fg.magentastrong +
-                    "*******************************************************");
+            "*******************************************************");
         console.log("                                                       ");
         console.log("             🎮 GameVerse - Menu de Jogos              ");
         console.log("                                                       ");
@@ -44,7 +60,7 @@ export function main() {
         opcao = readlinesync.questionInt("");
 
         if (opcao == 6) {
-            console.log(colors.fg.cyanstrong,"\n🚪 Saindo do sistema...");
+            console.log(colors.fg.cyanstrong, "\n🚪 Saindo do sistema...");
             console.log(colors.fg.cyanstrong,
                 "\n🎮 GameVerse – Um universo inteiro de jogos ao seu alcance!");
             sobre();

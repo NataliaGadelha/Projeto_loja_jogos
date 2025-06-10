@@ -1,4 +1,4 @@
-export class Jogo {
+export abstract class Jogo {
 
     private _codigo: number;
     private _nome: string;
