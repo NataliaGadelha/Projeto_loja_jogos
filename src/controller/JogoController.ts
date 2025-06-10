@@ -3,10 +3,14 @@ import { JogoRepository } from "../repository/JogoRepository";
 import { colors } from "../util/Colors";
 import { JogoFisico } from "../model/JogoFisico";
 import { JogoDigital } from "../model/JogoDigital";
+import { Venda } from "../model/Venda";
 
 export class JogoController implements JogoRepository {
 
     private listaJogos: Array<Jogo> = new Array<Jogo>();
+    // private listaVendas: Array<Venda> = new Array<Venda>();
+    private listaVendas: Venda[] = [];
+    private codigoVenda: number = 0;
     codigo: number = 0;
 
     buscarPorCodigo(codigo: number): void {
@@ -90,20 +94,23 @@ export class JogoController implements JogoRepository {
         return null;
     }
 
-    vender(codigo: number, quantidade: number): boolean {
+    registrarVenda(codigo: number, quantidade: number): boolean {
         let jogo = this.buscarNoArray(codigo);
 
         if (jogo == null) {
-            console.log(colors.fg.red, `\n❌ Jogo código ${codigo} não encontrado!`, colors.reset);
+            console.log(colors.fg.redstrong, `\n❌ Jogo código ${codigo} não encontrado!`, colors.reset);
             return false;
         }
 
         if (jogo instanceof JogoFisico) {
             if (jogo.estoque >= quantidade) {
                 jogo.estoque -= quantidade;
+                this.codigoVenda++;
+                const venda = new Venda(this.codigoVenda, jogo, quantidade);
+                this.listaVendas.push(venda);
                 console.log(colors.fg.greenstrong, `\n✅ Vendidos ${quantidade} unidade(s) do jogo "${jogo.nome}". Estoque atual: ${jogo.estoque}`, colors.reset);
 
-                // Se acabar o estoque, pode marcar indisponível
+                // Se acabar o estoque, marcar indisponível
                 if (jogo.estoque === 0) {
                     jogo.disponivel = false;
                     console.log(colors.fg.yellowstrong, `\n⚠️ Estoque do jogo "${jogo.nome}" esgotado. Jogo marcado como indisponível.`, colors.reset);
@@ -115,13 +122,31 @@ export class JogoController implements JogoRepository {
             }
         } else if (jogo instanceof JogoDigital) {
             // Jogos digitais não têm estoque físico, só confirmamos a venda
-            console.log(colors.fg.green, `\n✅ Venda confirmada do jogo digital "${jogo.nome}".`, colors.reset);
+            this.codigoVenda++;
+            const venda = new Venda(this.codigoVenda, jogo, quantidade);
+            this.listaVendas.push(venda);
+            console.log(colors.fg.greenstrong, `\n✅ Venda confirmada do jogo digital "${jogo.nome}".`, colors.reset);
             return true;
         } else {
-            console.log(colors.fg.red, `\n❌ Tipo de jogo desconhecido.`, colors.reset);
+            console.log(colors.fg.redstrong, `\n❌ Tipo de jogo desconhecido.`, colors.reset);
             return false;
         }
+
     }
 
+    public listarVendas(): void {
+        if (this.listaVendas.length === 0) {
+            console.log(colors.fg.yellowstrong, "\nNenhuma venda registrada ainda.", colors.reset);
+            return;
+        }
+
+        console.log("\n🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟");
+        console.log(colors.fg.magentastrong, "\n                         LISTA DE VENDAS  ", colors.reset);
+        console.log("\n🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟\n");
+        this.listaVendas.forEach((venda, index) => {
+            // console.log(`\nVenda #${index + 1}`);
+            venda.mostrarResumo(); // ou imprimir as infos da venda aqui direto
+        });
+    }
 
 }

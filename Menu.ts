@@ -47,12 +47,13 @@ export function main() {
         console.log("🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟");
         console.log("                                                       ");
         console.log("             1 - 📥 Cadastrar Jogo                     ");
-        console.log("             2 - 📜 Listar todos os Jogos              ");
+        console.log("             2 - 📋 Listar todos os Jogos              ");
         console.log("             3 - 🔎 Buscar Jogo por Número             ");
         console.log("             4 - ✏️  Atualizar informações do Jogo     ");
         console.log("             5 - 🗑️  Apagar Jogo                       ");
-        console.log("             6 - 💸 Vender Jogo                         ");
-        console.log("             7 - ❌ Sair                               ");
+        console.log("             6 - 💸 Registrar Venda                    ");
+        console.log("             7 - 📋 Listar Vendas                      ");
+        console.log("             8 - ❌ Sair                               ");
         console.log("                                                       ");
         console.log("🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟");
         console.log("                                                       ",
@@ -62,7 +63,7 @@ export function main() {
         console.log("\n📲 Escolha uma opção digitando o número correspondente:\n");
         opcao = readlinesync.questionInt("");
 
-        if (opcao == 7) {
+        if (opcao == 8) {
             console.log(colors.fg.greenstrong, "\n🚪 Saindo do sistema...");
             console.log(colors.fg.greenstrong,
                 "\n🎮 GameVerse – Um universo inteiro de jogos ao seu alcance!");
@@ -206,7 +207,7 @@ export function main() {
                 break;
 
             case 6:
-                console.log(colors.fg.whitestrong, "\n\n💸 Venda de Jogo\n\n", colors.reset);
+                console.log(colors.fg.whitestrong, "\n\n💸 Registrar Venda\n\n", colors.reset);
 
                 console.log("🆔 Digite o código do jogo: ");
                 codigo = readlinesync.questionInt("");
@@ -214,10 +215,19 @@ export function main() {
                 console.log("🔢 Digite a quantidade: ");
                 let quantidade = readlinesync.questionInt("");
 
-                jogos.vender(codigo, quantidade);
+                jogos.registrarVenda(codigo, quantidade);
 
                 keyPress();
                 break;
+
+            case 7:
+                console.log(colors.fg.whitestrong, "\n\n📋 Listando todas as vendas\n\n", colors.reset);
+
+                jogos.listarVendas();
+
+                keyPress();
+                break;
+
 
         }
     }
