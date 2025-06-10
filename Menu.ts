@@ -51,7 +51,8 @@ export function main() {
         console.log("             3 - 🔎 Buscar Jogo por Número             ");
         console.log("             4 - ✏️  Atualizar informações do Jogo     ");
         console.log("             5 - 🗑️  Apagar Jogo                       ");
-        console.log("             6 - ❌ Sair                               ");
+        console.log("             6 - 💸 Vender Jogo                         ");
+        console.log("             7 - ❌ Sair                               ");
         console.log("                                                       ");
         console.log("🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟");
         console.log("                                                       ",
@@ -61,7 +62,7 @@ export function main() {
         console.log("\n📲 Escolha uma opção digitando o número correspondente:\n");
         opcao = readlinesync.questionInt("");
 
-        if (opcao == 6) {
+        if (opcao == 7) {
             console.log(colors.fg.greenstrong, "\n🚪 Saindo do sistema...");
             console.log(colors.fg.greenstrong,
                 "\n🎮 GameVerse – Um universo inteiro de jogos ao seu alcance!");
@@ -203,6 +204,21 @@ export function main() {
 
                 keyPress()
                 break;
+
+            case 6:
+                console.log(colors.fg.whitestrong, "\n\n💸 Venda de Jogo\n\n", colors.reset);
+
+                console.log("🆔 Digite o código do jogo: ");
+                codigo = readlinesync.questionInt("");
+
+                console.log("🔢 Digite a quantidade: ");
+                let quantidade = readlinesync.questionInt("");
+
+                jogos.vender(codigo, quantidade);
+
+                keyPress();
+                break;
+
         }
     }
 

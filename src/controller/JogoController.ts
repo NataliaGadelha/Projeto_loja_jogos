@@ -1,6 +1,8 @@
 import { Jogo } from "../model/Jogo";
 import { JogoRepository } from "../repository/JogoRepository";
 import { colors } from "../util/Colors";
+import { JogoFisico } from "../model/JogoFisico";
+import { JogoDigital } from "../model/JogoDigital";
 
 export class JogoController implements JogoRepository {
 
@@ -87,5 +89,39 @@ export class JogoController implements JogoRepository {
 
         return null;
     }
+
+    vender(codigo: number, quantidade: number): boolean {
+        let jogo = this.buscarNoArray(codigo);
+
+        if (jogo == null) {
+            console.log(colors.fg.red, `\n❌ Jogo código ${codigo} não encontrado!`, colors.reset);
+            return false;
+        }
+
+        if (jogo instanceof JogoFisico) {
+            if (jogo.estoque >= quantidade) {
+                jogo.estoque -= quantidade;
+                console.log(colors.fg.greenstrong, `\n✅ Vendidos ${quantidade} unidade(s) do jogo "${jogo.nome}". Estoque atual: ${jogo.estoque}`, colors.reset);
+
+                // Se acabar o estoque, pode marcar indisponível
+                if (jogo.estoque === 0) {
+                    jogo.disponivel = false;
+                    console.log(colors.fg.yellowstrong, `\n⚠️ Estoque do jogo "${jogo.nome}" esgotado. Jogo marcado como indisponível.`, colors.reset);
+                }
+                return true;
+            } else {
+                console.log(colors.fg.redstrong, `\n❌ Estoque insuficiente. Estoque atual: ${jogo.estoque}`, colors.reset);
+                return false;
+            }
+        } else if (jogo instanceof JogoDigital) {
+            // Jogos digitais não têm estoque físico, só confirmamos a venda
+            console.log(colors.fg.green, `\n✅ Venda confirmada do jogo digital "${jogo.nome}".`, colors.reset);
+            return true;
+        } else {
+            console.log(colors.fg.red, `\n❌ Tipo de jogo desconhecido.`, colors.reset);
+            return false;
+        }
+    }
+
 
 }
